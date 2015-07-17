@@ -10,8 +10,11 @@
   <li class="@if(filter == "assigned"){active}">
     <a href="@path/dashboard/@active/assigned@condition.copy(author = None, assigned = None).toURL">Assigned</a>
   </li>
-  <li class="@if(filter == "mentioned"){active} last">
+  <li class="@if(filter == "mentioned"){active}">
     <a href="@path/dashboard/@active/mentioned@condition.copy(author = None, assigned = None).toURL">Mentioned</a>
+  </li>
+  <li class="@if(filter == "all"){active} last">
+    <a href="@path/dashboard/@active/all@condition.copy(author = None, assigned = None).toURL">All</a>
   </li>
   <li class="pull-right">
     <form method="GET" id="search-filter-form" action="@path/dashboard/@active" style="margin-bottom: 0px;">
