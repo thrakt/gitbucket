@@ -71,6 +71,10 @@ trait DashboardControllerBase extends ControllerBase {
   get("/dashboard/pulls/mentioned")(usersOnly {
     searchPullRequests("mentioned")
   })
+  
+  get("/dashboard/pulls/all")(usersOnly {
+    searchPullRequests("all")
+  })
 
   private def getOrCreateCondition(key: String, filter: String, userName: String) = {
     val condition = session.putAndGet(key, if(request.hasQueryString){
@@ -85,6 +89,7 @@ trait DashboardControllerBase extends ControllerBase {
     filter match {
       case "assigned"  => condition.copy(assigned = Some(userName), author = None          , mentioned = None)
       case "mentioned" => condition.copy(assigned = None          , author = None          , mentioned = Some(userName))
+      case "all"       => condition.copy(assigned = None          , author = None          , mentioned = None)
       case _           => condition.copy(assigned = None          , author = Some(userName), mentioned = None)
     }
   }
@@ -128,6 +133,7 @@ trait DashboardControllerBase extends ControllerBase {
       filter match {
         case "assigned"  => condition.copy(assigned  = Some(userName))
         case "mentioned" => condition.copy(mentioned = Some(userName))
+        case "all"       => condition
         case _           => condition.copy(author    = Some(userName))
       },
       filter,
